@@ -11,6 +11,7 @@ export class MainMenu extends Phaser.Scene {
     this.load.image("level3", "assets/rigatoni.png")
     this.load.image("level4", "assets/ravioli.png")
     this.load.image("lock", "assets/lock.png")
+    this.load.image("back", "assets/back.png")
     this.load.image("title-bg", "assets/title-bg.png")
   }
 
@@ -142,22 +143,40 @@ export class MainMenu extends Phaser.Scene {
       this.scene.start("Level1")
     })
 
-    const muteIcon = this.add.image(100, 100, "muteIcon")
+    const backIcon = this.add.image(
+      100, // Position near the left side
+      100, // Y-coordinate remains the same
+      "back" // Use the "back.png" asset
+    );
+    backIcon.setInteractive();
+    backIcon.setScale(0.1);
+    
+    backIcon.on("pointerdown", () => {
+      this.scene.start("Menu"); // Navigate back to the Menu scene
+    });
+
+    const muteIcon = this.add.image(
+      this.cameras.main.width - 100, 100,
+      "muteIcon"
+    )
     muteIcon.setInteractive()
     muteIcon.setScale(0.1)
     muteIcon.setVisible(false)
-
+    
     muteIcon.on("pointerdown", () => {
       this.sound.mute = false
       selectSound.play()
       muteIcon.setVisible(false)
       soundIcon.setVisible(true)
     })
-
-    const soundIcon = this.add.image(100, 100, "soundIcon")
+    
+    const soundIcon = this.add.image(
+      this.cameras.main.width - 100, 100, 
+      "soundIcon"
+    )
     soundIcon.setInteractive()
     soundIcon.setScale(0.1)
-
+    
     soundIcon.on("pointerdown", () => {
       selectSound.play()
       this.sound.mute = true

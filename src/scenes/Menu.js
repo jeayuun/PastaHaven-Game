@@ -4,36 +4,46 @@ export class Menu extends Phaser.Scene {
   }
 
   preload() {
-    this.load.image("background", "assets/bg.png"); // Load background image
-    this.load.image("playButton", "assets/plank.png"); // Load button images
-    this.load.image("quitButton", "assets/plank.png");
-    this.load.image("optionsButton", "assets/plank.png");
+    this.load.image("background", "assets/bg.png")
+    this.load.image("playButton", "assets/play-btn.png")
+    this.load.image("quitButton", "assets/quit-btn.png")
+    this.load.image("optionsButton", "assets/option-btn.png")
+    this.load.image("title-bg", "assets/title-bg.png")
   }
 
   create() {
-    // Add background
-    const bg = this.add.image(0, 0, "background");
-    bg.setOrigin(0, 0);
-    bg.setDisplaySize(this.sys.game.config.width, this.sys.game.config.height);
+    const hoverSound = this.sound.add("hover")
+    const startSound = this.sound.add("start")
+    const selectSound = this.sound.add("select")
+    
+    const bg = this.add.image(0, 0, "background")
+    bg.setOrigin(0, 0)
+    bg.setDisplaySize(this.sys.game.config.width, this.sys.game.config.height) 
 
-    // Add title
-    const title = this.add.text(
+    const titleBg = this.add.image(
       this.cameras.main.width / 2,
-      this.cameras.main.height / 4,
-      "Pasta Haven",
-      {
-        fontFamily: "PixelFont",
-        fontSize: "72px",
-        color: "#ffffff",
-        align: "center",
-      }
-    );
-    title.setOrigin(0.5, 0.5);
-    title.setShadow(3, 3, "#000000", 4);
+      this.cameras.main.width / 4,
+      "title-bg"
+    )
+    titleBg.setOrigin(0.5, 0.6).setScale(1500 / titleBg.width)
+
+    const subtitle = this.add.text(
+        this.cameras.main.width / 2,
+        this.cameras.main.height - 80, 
+        "Created by Group 2 of BSCS 2-1N",
+        {
+          fontFamily: "PixelFont",
+          fontSize: "32px", 
+          color: "#ffffff",
+          align: "center",
+        }
+      );
+      subtitle.setOrigin(0.5, 0.5);
+      subtitle.setShadow(2, 2, "#000000", 3, false, true);
 
     // Button positions
-    const buttonY = this.cameras.main.height / 2;
-    const buttonSpacing = 100; // Space between buttons
+    const buttonY = this.cameras.main.height / 2
+    const buttonSpacing = 180
 
     // Play button
     const playButton = this.add.image(
@@ -41,23 +51,13 @@ export class Menu extends Phaser.Scene {
       buttonY,
       "playButton"
     );
-    playButton.setScale(0.5);
+    playButton.setScale(0.25);
     playButton.setInteractive();
-    const playText = this.add.text(
-      playButton.x,
-      playButton.y,
-      "PLAY",
-      {
-        fontFamily: "PixelFont",
-        fontSize: "36px",
-        color: "#000000",
-      }
-    );
-    playText.setOrigin(0.5, 0.5);
 
     playButton.on("pointerdown", () => {
-      this.scene.start("MainMenu"); // Start MainMenu scene
-    });
+        startSound.play()
+        this.scene.start("MainMenu")
+    })
 
     // Quit button
     const quitButton = this.add.image(
@@ -65,22 +65,12 @@ export class Menu extends Phaser.Scene {
       buttonY + buttonSpacing,
       "quitButton"
     );
-    quitButton.setScale(0.5);
-    quitButton.setInteractive();
-    const quitText = this.add.text(
-      quitButton.x,
-      quitButton.y,
-      "QUIT",
-      {
-        fontFamily: "PixelFont",
-        fontSize: "36px",
-        color: "#000000",
-      }
-    );
-    quitText.setOrigin(0.5, 0.5);
+    quitButton.setScale(0.25)
+    quitButton.setInteractive()
 
     quitButton.on("pointerdown", () => {
-      window.close(); // Exit the game (works only in certain browsers)
+        startSound.play()
+        window.close() // Exit the game (works only in certain browsers)
     });
 
     // Options button
@@ -89,31 +79,21 @@ export class Menu extends Phaser.Scene {
       buttonY + 2 * buttonSpacing,
       "optionsButton"
     );
-    optionsButton.setScale(0.5);
+    optionsButton.setScale(0.25);
     optionsButton.setInteractive();
-    const optionsText = this.add.text(
-      optionsButton.x,
-      optionsButton.y,
-      "OPTIONS",
-      {
-        fontFamily: "PixelFont",
-        fontSize: "36px",
-        color: "#000000",
-      }
-    );
-    optionsText.setOrigin(0.5, 0.5);
-
+    
     optionsButton.on("pointerdown", () => {
-      this.scene.start("Options"); // Start Options scene
+        startSound.play()
+        this.scene.start("Options")
     });
 
-    // Add hover effect for all buttons
     [playButton, quitButton, optionsButton].forEach((button) => {
       button.on("pointerover", () => {
-        button.setScale(0.55);
+        button.setScale(0.28)
+        hoverSound.play()
       });
       button.on("pointerout", () => {
-        button.setScale(0.5);
+        button.setScale(0.25)
       });
     });
   }
