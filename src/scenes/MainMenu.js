@@ -28,38 +28,52 @@ export class MainMenu extends Phaser.Scene {
       this.cameras.main.width / 4,
       "title-bg"
     )
-    titleBg.setOrigin(0.5, 0.5).setScale(800 / titleBg.width)
+    titleBg.setOrigin(0.5, 0.6).setScale(1500 / titleBg.width)
 
-    const title = this.add
-      .text(
-        this.cameras.main.width / 2,
-        this.cameras.main.width / 4 - 50,
-        "pasta-nation",
-        {
-          fontFamily: "PixelFont",
-          fontSize: "72px",
-          color: "#000000",
-        }
-      )
-      .setOrigin(0.5, 0.5)
-      .setShadow(2, 2, "#ffffff", 4, false, true)
+    // const title = this.add
+    //   .text(
+    //     this.cameras.main.width / 2,
+    //     this.cameras.main.width / 4 - 50,
+    //     "Pasta Haven",
+    //     {
+    //       fontFamily: "PixelFont",
+    //       fontSize: "72px",
+    //       color: "#000000",
+    //     }
+    //   )
+    //   .setOrigin(0.5, 0.5)
+    //   .setShadow(2, 2, "#ffffff", 4, false, true)
 
-    const subtitle = this.add
-      .text(
-        this.cameras.main.width / 2,
-        this.cameras.main.width / 4 + 20,
-        "your handcrafted pasta\njourney begins here!",
-        {
-          fontFamily: "PixelFont",
-          textAlign: "center",
-          fontSize: "32px",
-          color: "#ffffff",
-        }
-      )
-      .setOrigin(0.5, 0.5)
-      .setShadow(1, 1, "#000000", 2, false, true)
+    // const subtitle = this.add
+    //   .text(
+    //     this.cameras.main.width / 2,
+    //     this.cameras.main.width / 4 + 20,
+    //     "your handcrafted pasta\nmade with love and served with warmth!",
+    //     {
+    //       fontFamily: "PixelFont",
+    //       textAlign: "center",
+    //       fontSize: "32px",
+    //       color: "#ffffff",
+    //     }
+    //   )
+    //   .setOrigin(0.5, 0.5)
+    //   .setShadow(1, 1, "#000000", 2, false, true)
 
-    const levelTileWidth = 550
+    const subtitle = this.add.text(
+      this.cameras.main.width / 2,
+      this.cameras.main.height - 80, 
+      "Welcome to the coziest little pasta kitchen!\nToday, you're the chef. Now, choose your dish!",
+      {
+        fontFamily: "PixelFont",
+        fontSize: "32px", 
+        color: "#ffffff",
+        align: "center",
+      }
+    );
+    subtitle.setOrigin(0.5, 0.5);
+    subtitle.setShadow(2, 2, "#000000", 3, false, true);
+
+    const levelTileWidth = 600
     const levelTileScale = levelTileWidth / this.cameras.main.width
 
     const levels = []
@@ -69,7 +83,7 @@ export class MainMenu extends Phaser.Scene {
       const level = this.add
         .image(
           ((i + 1) * this.cameras.main.width) / 5,
-          (2 * this.cameras.main.height) / 3,
+          (2 * this.cameras.main.height) / 3.5,
           `level${i + 1}`
         )
         .setInteractive()
@@ -79,7 +93,7 @@ export class MainMenu extends Phaser.Scene {
 
       const plank = this.add.image(
         ((i + 1) * this.cameras.main.width) / 5,
-        (2 * this.cameras.main.height) / 3 + 200,
+        (2 * this.cameras.main.height) / 3 + 90,
         "plank"
       )
       plank.setScale(0.15)
@@ -87,7 +101,7 @@ export class MainMenu extends Phaser.Scene {
 
       const label = this.add.text(
         ((i + 1) * this.cameras.main.width) / 5,
-        (2 * this.cameras.main.height) / 3 + 200,
+        (2 * this.cameras.main.height) / 3 + 90,
         levelLabels[i],
         {
           fontFamily: "PixelFont",
@@ -106,7 +120,7 @@ export class MainMenu extends Phaser.Scene {
       if (i !== 0) {
         const lock = this.add.image(
           ((i + 1) * this.cameras.main.width) / 5,
-          (2 * this.cameras.main.height) / 3,
+          (2 * this.cameras.main.height) / 3.5,
           "lock"
         )
         lock.setScale(0.15)
