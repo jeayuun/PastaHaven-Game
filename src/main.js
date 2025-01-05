@@ -1,5 +1,7 @@
 import { Game } from "./scenes/Game"
 import { GameOver } from "./scenes/GameOver"
+import { Menu } from "./scenes/Menu"
+import { Options } from "./scenes/Options"
 import { MainMenu } from "./scenes/MainMenu"
 import { Level1 } from "./scenes/Level1"
 import { Preloader } from "./scenes/PreLoader"
@@ -13,7 +15,7 @@ const config = {
     mode: Phaser.Scale.FIT,
     autoCenter: Phaser.Scale.CENTER_BOTH,
   },
-  scene: [Preloader, MainMenu, Level1, GameOver],
+  scene: [Preloader, Menu, Options,  MainMenu, Level1, GameOver],
 }
 
 export default new Phaser.Game(config)
