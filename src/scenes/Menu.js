@@ -30,7 +30,7 @@ export class Menu extends Phaser.Scene {
     const subtitle = this.add.text(
         this.cameras.main.width / 2,
         this.cameras.main.height - 80, 
-        "Created by Group 2 of BSCS 2-1N",
+        "Created by Group 2 of BSCS 3-1N",
         {
           fontFamily: "PixelFont",
           fontSize: "32px", 
@@ -59,24 +59,10 @@ export class Menu extends Phaser.Scene {
         this.scene.start("MainMenu")
     })
 
-    // Quit button
-    const quitButton = this.add.image(
-      this.cameras.main.width / 2,
-      buttonY + buttonSpacing,
-      "quitButton"
-    );
-    quitButton.setScale(0.25)
-    quitButton.setInteractive()
-
-    quitButton.on("pointerdown", () => {
-        startSound.play()
-        window.close() // Exit the game (works only in certain browsers)
-    });
-
     // Options button
     const optionsButton = this.add.image(
       this.cameras.main.width / 2,
-      buttonY + 2 * buttonSpacing,
+      buttonY + buttonSpacing,
       "optionsButton"
     );
     optionsButton.setScale(0.25);
@@ -87,7 +73,21 @@ export class Menu extends Phaser.Scene {
         this.scene.start("Options")
     });
 
-    [playButton, quitButton, optionsButton].forEach((button) => {
+    // Quit button
+    const quitButton = this.add.image(
+      this.cameras.main.width / 2,
+      buttonY + 2 * buttonSpacing,
+      "quitButton"
+    );
+    quitButton.setScale(0.25)
+    quitButton.setInteractive()
+
+    quitButton.on("pointerdown", () => {
+        startSound.play()
+        window.close() // Exit the game (works only in certain browsers)
+    });
+
+    [playButton, optionsButton, quitButton].forEach((button) => {
       button.on("pointerover", () => {
         button.setScale(0.28)
         hoverSound.play()

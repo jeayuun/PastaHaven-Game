@@ -11,7 +11,8 @@ export class MainMenu extends Phaser.Scene {
     this.load.image("level3", "assets/rigatoni.png")
     this.load.image("level4", "assets/ravioli.png")
     this.load.image("lock", "assets/lock.png")
-    this.load.image("back-btn", "assets/back-btn.png")
+    this.load.image("back", "assets/back.png")
+    this.load.image("title-bg", "assets/title-bg.png")
   }
 
   create() {
@@ -23,13 +24,49 @@ export class MainMenu extends Phaser.Scene {
     bg.setOrigin(0, 0)
     bg.setDisplaySize(this.sys.game.config.width, this.sys.game.config.height) // Scale to fit
 
+    const titleBg = this.add.image(
+      this.cameras.main.width / 2,
+      this.cameras.main.width / 4,
+      "title-bg"
+    )
+    titleBg.setOrigin(0.5, 0.6).setScale(1500 / titleBg.width)
+
+    // const title = this.add
+    //   .text(
+    //     this.cameras.main.width / 2,
+    //     this.cameras.main.width / 4 - 50,
+    //     "Pasta Haven",
+    //     {
+    //       fontFamily: "PixelFont",
+    //       fontSize: "72px",
+    //       color: "#000000",
+    //     }
+    //   )
+    //   .setOrigin(0.5, 0.5)
+    //   .setShadow(2, 2, "#ffffff", 4, false, true)
+
+    // const subtitle = this.add
+    //   .text(
+    //     this.cameras.main.width / 2,
+    //     this.cameras.main.width / 4 + 20,
+    //     "your handcrafted pasta\nmade with love and served with warmth!",
+    //     {
+    //       fontFamily: "PixelFont",
+    //       textAlign: "center",
+    //       fontSize: "32px",
+    //       color: "#ffffff",
+    //     }
+    //   )
+    //   .setOrigin(0.5, 0.5)
+    //   .setShadow(1, 1, "#000000", 2, false, true)
+
     const subtitle = this.add.text(
       this.cameras.main.width / 2,
-      150, 
-      "Choose your pasta!",
+      this.cameras.main.height - 80, 
+      "Welcome to the coziest little pasta kitchen!\nToday, you're the chef. Now, choose your dish!",
       {
         fontFamily: "PixelFont",
-        fontSize: "48px", 
+        fontSize: "32px", 
         color: "#ffffff",
         align: "center",
       }
@@ -37,71 +74,68 @@ export class MainMenu extends Phaser.Scene {
     subtitle.setOrigin(0.5, 0.5);
     subtitle.setShadow(2, 2, "#000000", 3, false, true);
 
-    const levelTileWidth = 750
+    const levelTileWidth = 600
     const levelTileScale = levelTileWidth / this.cameras.main.width
 
     const levels = []
     const levelLabels = ["fettuccine", "farfalle", "rigatoni", "ravioli"]
 
-    const positions = [
-      { x: this.cameras.main.width / 2.7, y: this.cameras.main.height / 3.2 }, // Top-left
-      { x: (1.85 * this.cameras.main.width) / 3, y: this.cameras.main.height / 3.2 }, // Top-right
-      { x: this.cameras.main.width / 2.7, y: (2.3 * this.cameras.main.height) / 3.2 }, // Bottom-left
-      { x: (1.85 * this.cameras.main.width) / 3, y: (2.3 * this.cameras.main.height) / 3.2 }, // Bottom-right
-    ];
-
     for (let i = 0; i < 4; i++) {
       const level = this.add
-        .image(positions[i].x, positions[i].y, `level${i + 1}`)
-        .setInteractive();
-      level.setScale(levelTileScale);
-      level.preFX.addShadow();
-      levels.push(level);
+        .image(
+          ((i + 1) * this.cameras.main.width) / 5,
+          (2 * this.cameras.main.height) / 3.5,
+          `level${i + 1}`
+        )
+        .setInteractive()
+      level.setScale(levelTileScale)
+      level.preFX.addShadow()
+      levels.push(level)
 
       const plank = this.add.image(
-        positions[i].x,
-        positions[i].y + 240,
-        "plank"   
-      );
-      plank.setScale(0.19);
-      plank.preFX.addShadow();
+        ((i + 1) * this.cameras.main.width) / 5,
+        (2 * this.cameras.main.height) / 3 + 90,
+        "plank"
+      )
+      plank.setScale(0.15)
+      plank.preFX.addShadow()
 
       const label = this.add.text(
-        positions[i].x,
-        positions[i].y + 240,
+        ((i + 1) * this.cameras.main.width) / 5,
+        (2 * this.cameras.main.height) / 3 + 90,
         levelLabels[i],
         {
           fontFamily: "PixelFont",
-          fontSize: "36px",
+          fontSize: "26px",
           color: "#ffffff",
         }
-      );
-      label.setOrigin(0.5, 0.5);
-      label.setShadow(2, 2, "#000000", 3, false, true);
+      )
+      label.setOrigin(0.5, 0.5)
+      label.setShadow(1, 1, "#000000", 3, false, true)
     }
 
     for (let i = 0; i < 4; i++) {
-      const group = this.add.group();
-      const level = levels[i];
-      group.add(level);
+      const group = this.add.group()
+      const level = levels[i]
+      group.add(level)
       if (i !== 0) {
         const lock = this.add.image(
-          positions[i].x,
-          positions[i].y,
+          ((i + 1) * this.cameras.main.width) / 5,
+          (2 * this.cameras.main.height) / 3.5,
           "lock"
-        );
-        lock.setScale(0.15);
-        levels[i].setTint(0x808080);
-        group.add(lock);
+        )
+        lock.setScale(0.15)
+        levels[i].setTint(0x808080)
+        group.add(lock)
       }
       level.on("pointerover", () => {
-        level.setScale(levelTileScale + 0.02);
-        hoverSound.play();
-      });
+        level.setScale(levelTileScale + 0.02)
+        hoverSound.play()
+      })
 
       level.on("pointerout", () => {
-        level.setScale(levelTileScale);
-      });
+        level.setScale(levelTileScale)
+      })
     }
 
     levels[0].on("pointerdown", () => {
@@ -112,22 +146,13 @@ export class MainMenu extends Phaser.Scene {
     const backIcon = this.add.image(
       100, // Position near the left side
       100, // Y-coordinate remains the same
-      "back-btn" // Use the "back.png" asset
+      "back" // Use the "back.png" asset
     );
     backIcon.setInteractive();
     backIcon.setScale(0.1);
     
     backIcon.on("pointerdown", () => {
       this.scene.start("Menu"); // Navigate back to the Menu scene
-    });
-
-    backIcon.on("pointerover", () => {
-      backIcon.setScale(0.12); // Zoom in slightly
-      hoverSound.play();
-    });
-
-    backIcon.on("pointerout", () => {
-      backIcon.setScale(0.1); // Revert to original size
     });
 
     const muteIcon = this.add.image(
@@ -144,15 +169,6 @@ export class MainMenu extends Phaser.Scene {
       muteIcon.setVisible(false)
       soundIcon.setVisible(true)
     })
-
-    muteIcon.on("pointerover", () => {
-      muteIcon.setScale(0.12); // Zoom in slightly
-      hoverSound.play();
-    });
-
-    muteIcon.on("pointerout", () => {
-      muteIcon.setScale(0.1); // Revert to original size
-    });
     
     const soundIcon = this.add.image(
       this.cameras.main.width - 100, 100, 
@@ -167,14 +183,5 @@ export class MainMenu extends Phaser.Scene {
       muteIcon.setVisible(true)
       soundIcon.setVisible(false)
     })
-
-    soundIcon.on("pointerover", () => {
-      soundIcon.setScale(0.12); // Zoom in slightly
-      hoverSound.play();
-    });
-
-    soundIcon.on("pointerout", () => {
-      soundIcon.setScale(0.1); // Revert to original size
-    });
   }
 }

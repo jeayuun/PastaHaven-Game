@@ -5,107 +5,76 @@ export class Options extends Phaser.Scene {
   
     preload() {
       this.load.image("background", "assets/bg.png")
+      this.load.image("option", "assets/option.png")
+      this.load.image("back", "assets/opt-back.png")
+      this.load.image("musicon", "assets/opt-musicon.png")
+      this.load.image("musicoff", "assets/opt-musicoff.png")
+      this.load.image("sfxon", "assets/opt-sfxon.png")
+      this.load.image("sfxoff", "assets/opt-sfxoff.png")
       this.load.image("button", "assets/plank.png")
     }
   
     create() {
         const hoverSound = this.sound.add("hover")
+        const startSound = this.sound.add("start")
+        const selectSound = this.sound.add("select")
+        
 
         const bg = this.add.image(0, 0, "background")
         bg.setOrigin(0, 0);
         bg.setDisplaySize(this.sys.game.config.width, this.sys.game.config.height)
-    
-        const title = this.add.text(
+
+        const option = this.add.image(
             this.cameras.main.width / 2,
-            this.cameras.main.height / 4,
-            "Options",
-            {
-            fontFamily: "PixelFont",
-            fontSize: "68px",
-            color: "#ffffff",
-            align: "center",
-            }
-        );
-        title.setOrigin(0.5, 0.5);
-        title.setShadow(2, 2, "#000000", 3);
+            this.cameras.main.width / 4,
+            "option"
+          )
+        option.setOrigin(0.5, 0.3).setScale(850 / option.width)
     
         // Button positions
-        const buttonY = this.cameras.main.height / 2;
-        const buttonSpacing = 180;
+        const buttonY = this.cameras.main.height / 1.85;
+        const buttonSpacing = 146;
     
         // Music Toggle Button
         let musicOn = true;
         const musicButton = this.add.image(
-            this.cameras.main.width / 2,
-            buttonY - buttonSpacing,
-            "button"
+        this.cameras.main.width / 2,
+        buttonY - buttonSpacing,
+        "musicon"
         );
         musicButton.setScale(0.25);
         musicButton.setInteractive();
-        const musicText = this.add.text(
-            musicButton.x,
-            musicButton.y,
-            "Music: ON",
-            {
-            fontFamily: "PixelFont",
-            fontSize: "32px",
-            color: "#000000",
-            }
-        );
-        musicText.setOrigin(0.5, 0.5);
-    
+
         musicButton.on("pointerdown", () => {
-            musicOn = !musicOn;
-            musicText.setText(`Music: ${musicOn ? "ON" : "OFF"}`);
-            this.sound.mute = !musicOn; // Toggle background music
+        musicOn = !musicOn;
+        musicButton.setTexture(musicOn ? "musicon" : "musicoff"); // Toggle image
+        this.sound.mute = !musicOn; // Toggle background music
         });
     
-        // Sound Effects Toggle Button
+        // Sound Effects Toggle Button (Image)
         let soundEffectsOn = true;
         const soundEffectsButton = this.add.image(
-            this.cameras.main.width / 2,
-            buttonY,
-            "button"
+        this.cameras.main.width / 2,
+        buttonY,
+        "sfxon"
         );
         soundEffectsButton.setScale(0.25);
         soundEffectsButton.setInteractive();
-        const soundEffectsText = this.add.text(
-            soundEffectsButton.x,
-            soundEffectsButton.y,
-            "Sound Effects: ON",
-            {
-            fontFamily: "PixelFont",
-            fontSize: "32px",
-            color: "#000000",
-            }
-        );
-        soundEffectsText.setOrigin(0.5, 0.5);
-    
+
         soundEffectsButton.on("pointerdown", () => {
-            soundEffectsOn = !soundEffectsOn;
-            soundEffectsText.setText(`Sound Effects: ${soundEffectsOn ? "ON" : "OFF"}`);
-            this.sound.volume = soundEffectsOn ? 1 : 0; // Toggle sound effects
+        soundEffectsOn = !soundEffectsOn;
+        soundEffectsButton.setTexture(soundEffectsOn ? "sfxon" : "sfxoff"); // Toggle image
+        this.sound.volume = soundEffectsOn ? 1 : 0; // Toggle sound effects
         });
     
         // Back Button
         const backButton = this.add.image(
             this.cameras.main.width / 2,
             buttonY + buttonSpacing,
-            "button"
+            "back"
         );
         backButton.setScale(0.25);
         backButton.setInteractive();
-        const backText = this.add.text(
-            backButton.x,
-            backButton.y,
-            "BACK",
-            {
-            fontFamily: "PixelFont",
-            fontSize: "32px",
-            color: "#000000",
-            }
-        );
-        backText.setOrigin(0.5, 0.5);
     
         backButton.on("pointerdown", () => {
             this.scene.start("Menu"); // Go back to the Menu scene
