@@ -83,11 +83,13 @@ export class Options extends Phaser.Scene {
         // Hover effects for all buttons
         [musicButton, soundEffectsButton, backButton].forEach((button) => {
             button.on("pointerover", () => {
-            button.setScale(0.28);
-            hoverSound.play()
+              button.setScale(0.28);
+              hoverSound.play()
+              document.body.style.cursor = "url('assets/cursors/hover-cursor.png'), auto"
             });
             button.on("pointerout", () => {
-            button.setScale(0.25);
+              button.setScale(0.25);
+              document.body.style.cursor = "url('assets/cursors/normal-cursor.png'), auto"
             });
         });
         }

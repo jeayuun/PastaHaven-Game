@@ -6,7 +6,7 @@ export class MainMenu extends Phaser.Scene {
   preload() {
     this.load.image("background", "assets/bg.png")
     this.load.image("title", "assets/title.png")
-    this.load.image("level1", "assets/fettuccine.png")
+    this.load.image("level1", "assets/spaghetti.png")
     this.load.image("level2", "assets/farfalle.png")
     this.load.image("level3", "assets/rigatoni.png")
     this.load.image("level4", "assets/ravioli.png")
@@ -41,7 +41,7 @@ export class MainMenu extends Phaser.Scene {
     const levelTileScale = levelTileWidth / this.cameras.main.width
 
     const levels = []
-    const levelLabels = ["fettuccine", "farfalle", "rigatoni", "ravioli"]
+    const levelLabels = ["spaghetti", "farfalle", "rigatoni", "ravioli"]
 
     const positions = [
       { x: this.cameras.main.width / 2.7, y: this.cameras.main.height / 3.2 }, // Top-left
@@ -97,10 +97,12 @@ export class MainMenu extends Phaser.Scene {
       level.on("pointerover", () => {
         level.setScale(levelTileScale + 0.02);
         hoverSound.play();
+        document.body.style.cursor = "url('assets/cursors/hover-cursor.png'), auto"
       });
 
       level.on("pointerout", () => {
         level.setScale(levelTileScale);
+        document.body.style.cursor = "url('assets/cursors/normal-cursor.png'), auto"
       });
     }
 
@@ -124,10 +126,12 @@ export class MainMenu extends Phaser.Scene {
     backIcon.on("pointerover", () => {
       backIcon.setScale(0.12); // Zoom in slightly
       hoverSound.play();
+      document.body.style.cursor = "url('assets/cursors/hover-cursor.png'), auto"
     });
 
     backIcon.on("pointerout", () => {
       backIcon.setScale(0.1); // Revert to original size
+      document.body.style.cursor = "url('assets/cursors/normal-cursor.png'), auto"
     });
 
     const muteIcon = this.add.image(
@@ -148,10 +152,12 @@ export class MainMenu extends Phaser.Scene {
     muteIcon.on("pointerover", () => {
       muteIcon.setScale(0.12); // Zoom in slightly
       hoverSound.play();
+      document.body.style.cursor = "url('assets/cursors/hover-cursor.png'), auto"
     });
 
     muteIcon.on("pointerout", () => {
       muteIcon.setScale(0.1); // Revert to original size
+      document.body.style.cursor = "url('assets/cursors/normal-cursor.png'), auto"
     });
     
     const soundIcon = this.add.image(
@@ -171,10 +177,12 @@ export class MainMenu extends Phaser.Scene {
     soundIcon.on("pointerover", () => {
       soundIcon.setScale(0.12); // Zoom in slightly
       hoverSound.play();
+      document.body.style.cursor = "url('assets/cursors/hover-cursor.png'), auto"
     });
 
     soundIcon.on("pointerout", () => {
       soundIcon.setScale(0.1); // Revert to original size
+      document.body.style.cursor = "url('assets/cursors/normal-cursor.png'), auto"
     });
   }
 }
